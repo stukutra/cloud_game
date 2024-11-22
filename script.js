@@ -241,13 +241,61 @@ function endGame() {
   const festiveMessage = document.createElement("div");
   festiveMessage.className = "festive-message";
   festiveMessage.innerHTML = `
-    <h1>🎄 Buon Natale 2024 dalla oneBlade! 🎁</h1>
-    <p>Grazie per aver giocato e buon divertimento!</p>
+      <h1>🎄 Buon Natale 2024 dalla oneBlade! 🎁</h1>
+      <p>Grazie per aver giocato e buon divertimento!</p>
   `;
 
   // Aggiungi il messaggio al contenitore del gioco
   gameContainer.appendChild(festiveMessage);
+
+  // Mantieni il messaggio per almeno 4 secondi, poi mostra i credits
+  setTimeout(() => {
+      festiveMessage.remove(); // Rimuove il messaggio di Natale
+      showCredits(); // Mostra i credits
+  }, 4000);
 }
+
+function showCredits() {
+  // Contenitore per i credits
+  const creditsContainer = document.createElement("div");
+  creditsContainer.id = "credits-container";
+  creditsContainer.innerHTML = `
+      <div class="credits">
+          <h2>Credits 🎮</h2>
+          <p>Un gioco fatto male da:</p>
+          <p>Guido, il programmatore di Babbo Natale</p>
+          <p>Tester:</p>
+          <ul>
+              <li>Mario, il ninja della tastiera</li>
+              <li>Anna, distruttrice di bug (e cuori)</li>
+              <li>Luca, il procrastinatore professionista</li>
+              <li>Giulia, maestra dei commenti inutili</li>
+              <li>Federico, il cliccatore di mouse seriale</li>
+              <li>Sara, il debugger umano</li>
+              <li>Andrea, che ha premuto F5 una volta di troppo</li>
+              <li>Elena, che ha scoperto un bug anche nel menu del ristorante</li>
+              <li>Tommaso, che ha scritto \`TODO\` in 100 righe di codice</li>
+              <li>Claudia, esperta in “Non so come ho fatto ma funziona”</li>
+              <li>E molti altri… ma non c'era spazio nei credits.</li>
+          </ul>
+      </div>
+      <button id="replay-button">Vuoi rigiocare?</button>
+  `;
+
+  // Aggiungi il contenitore dei credits al gioco
+  gameContainer.appendChild(creditsContainer);
+
+  // Aggiungi lo scroll verticale ai credits
+  const credits = document.querySelector(".credits");
+  credits.style.animation = "scrollCredits 20s linear infinite";
+
+  // Aggiungi evento al pulsante "Vuoi rigiocare?"
+  const replayButton = document.getElementById("replay-button");
+  replayButton.addEventListener("click", () => {
+      location.reload(); // Ricarica la pagina per rigiocare
+  });
+}
+
 
 function destroyEnemy(enemy) {
   const points = parseInt(enemy.dataset.hp); // Punti in base al tipo
@@ -255,14 +303,59 @@ function destroyEnemy(enemy) {
   scoreDisplay.textContent = `Score: ${score}`;
   enemy.classList.add("exploding"); // Animazione di esplosione
   setTimeout(() => {
-    gameContainer.removeChild(enemy);
-    enemies.splice(enemies.findIndex((e) => e.element === enemy), 1);
+      gameContainer.removeChild(enemy);
+      enemies.splice(enemies.findIndex((e) => e.element === enemy), 1);
   }, 500);
 
-  // Controlla se il punteggio è 50
+  // Controlla se il punteggio è 50 e mostra i credits
   if (score >= 50) {
-    endGame();
+      endGame();
   }
+}
+
+function showCredits() {
+  // Rimuovi il messaggio di Natale
+  const festiveMessage = document.querySelector(".festive-message");
+  if (festiveMessage) festiveMessage.remove();
+
+  // Contenitore per i credits
+  const creditsContainer = document.createElement("div");
+  creditsContainer.id = "credits-container";
+  creditsContainer.innerHTML = `
+      <div class="credits">
+          <h2>Credits 🎮</h2>
+          <p>Un gioco fatto male da:</p>
+          <p>Guido, il programmatore di Babbo Natale</p>
+          <p>Tester:</p>
+          <ul>
+              <li>Mario, il ninja della tastiera</li>
+              <li>Anna, distruttrice di bug (e cuori)</li>
+              <li>Luca, il procrastinatore professionista</li>
+              <li>Giulia, maestra dei commenti inutili</li>
+              <li>Federico, il cliccatore di mouse seriale</li>
+              <li>Sara, il debugger umano</li>
+              <li>Andrea, che ha premuto F5 una volta di troppo</li>
+              <li>Elena, che ha scoperto un bug anche nel menu del ristorante</li>
+              <li>Tommaso, che ha scritto TODO in 100 righe di codice</li>
+              <li>Claudia, esperta in “Non so come ho fatto ma funziona”</li>
+              <li>E molti altri… ma non c'era spazio nei credits.</li>
+          </ul>
+      </div>
+      <button id="replay-button">Vuoi rigiocare?</button>
+  `;
+
+  // Aggiungi il contenitore dei credits
+  gameContainer.appendChild(creditsContainer);
+
+  // Abilita lo scroll verticale dei credits
+  const credits = document.querySelector(".credits");
+  credits.style.animation = "scrollCredits 20s linear infinite";
+
+  // Aggiungi evento al pulsante "Vuoi rigiocare?"
+  const replayButton = document.getElementById("replay-button");
+  replayButton.addEventListener("click", () => {
+      location.reload(); // Ricarica la pagina per rigiocare
+  });
 }
 
 

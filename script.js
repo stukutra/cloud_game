@@ -233,6 +233,41 @@ function updateSnowballs() {
   });
 }
 
+function endGame() {
+  // Rimuovi tutti gli elementi del gioco
+  gameContainer.innerHTML = "";
+
+  // Crea il messaggio di Natale
+  const festiveMessage = document.createElement("div");
+  festiveMessage.className = "festive-message";
+  festiveMessage.innerHTML = `
+    <h1>🎄 Buon Natale 2024 dalla oneBlade! 🎁</h1>
+    <p>Grazie per aver giocato e buon divertimento!</p>
+  `;
+
+  // Aggiungi il messaggio al contenitore del gioco
+  gameContainer.appendChild(festiveMessage);
+}
+
+function destroyEnemy(enemy) {
+  const points = parseInt(enemy.dataset.hp); // Punti in base al tipo
+  score += points; // Aggiunge punti (1x, 2x, 3x)
+  scoreDisplay.textContent = `Score: ${score}`;
+  enemy.classList.add("exploding"); // Animazione di esplosione
+  setTimeout(() => {
+    gameContainer.removeChild(enemy);
+    enemies.splice(enemies.findIndex((e) => e.element === enemy), 1);
+  }, 500);
+
+  // Controlla se il punteggio è 50
+  if (score >= 50) {
+    endGame();
+  }
+}
+
+
+
+
 // Aggiornare il gioco
 function updateGame() {
   updatePlayerPosition();

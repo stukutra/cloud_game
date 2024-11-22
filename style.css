@@ -46,7 +46,6 @@ body {
 
 /* Strato vicino: Nuvole */
 #layer1 {
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0) 70%);
     animation: scroll-layer1 4s linear infinite;
     opacity: 0.9; /* Più visibile */
     z-index: 5;
@@ -412,5 +411,33 @@ body {
     }
     to {
       transform: translateX(-100%);
+    }
+  }
+
+
+  .festive-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+    animation: festive-glow 2s infinite alternate;
+  }
+  
+  /* Effetto di bagliore */
+  @keyframes festive-glow {
+    from {
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.6);
+    }
+    to {
+      text-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 30px rgba(0, 0, 255, 0.6);
     }
   }

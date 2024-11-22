@@ -276,14 +276,18 @@ body {
     animation: explode 0.5s ease-out forwards;
 }
 
-/* Punteggio */
 #score {
-    position: absolute;
-    top: 13px;
-    right: 220px;
-    font-size: 24px;
-    color: #fff;
-    font-family: Arial, sans-serif;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 /* Contenitore dei messaggi */

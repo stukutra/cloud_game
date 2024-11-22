@@ -359,6 +359,30 @@ function showCredits() {
 }
 
 
+// Aggiorna il contenuto di #score per mostrare il punteggio e l'obiettivo
+function updateScoreDisplay() {
+  scoreDisplay.textContent = `Score: ${score} / 50`; // Mostra il punteggio attuale e l'obiettivo
+}
+
+function destroyEnemy(enemy) {
+  const points = parseInt(enemy.dataset.hp); // Punti in base al tipo
+  score += points; // Aggiunge punti (1x, 2x, 3x)
+  updateScoreDisplay(); // Aggiorna la visualizzazione del punteggio
+  enemy.classList.add("exploding"); // Animazione di esplosione
+  setTimeout(() => {
+      gameContainer.removeChild(enemy);
+      enemies.splice(enemies.findIndex((e) => e.element === enemy), 1);
+  }, 500);
+
+  // Controlla se il punteggio è 50 e mostra i credits
+  if (score >= 50) {
+      endGame();
+  }
+}
+
+// Chiamata iniziale per impostare il punteggio iniziale
+updateScoreDisplay();
+
 
 
 // Aggiornare il gioco

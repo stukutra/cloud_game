@@ -509,3 +509,13 @@ body {
         transform: scale(1);
     }
 }
+
+
+/* Rotazione quando Babbo Natale si muove verso l'alto o il basso */
+#santa.up {
+  transform: translate(-50%, -50%) rotate(-10deg); /* Più inclinato verso l'alto */
+}
+
+#santa.down {
+  transform: translate(-50%, -50%) rotate(10deg); /* Più inclinato verso il basso */
+}

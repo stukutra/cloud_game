@@ -10,6 +10,13 @@ const enemies = [];
 const snowballs = [];
 const playerSpeed = 12;
 const keysPressed = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+
+let useMouse = true; // Flag per passare tra mouse e tastiera
+
+let lastMouseX = playerX;
+let lastMouseY = playerY;
+
+
 // Seleziona il contenitore delle decorazioni
 const groundDecorations = document.getElementById('ground-decorations');
 
@@ -52,6 +59,108 @@ const programmerMessages = [
 
 // Seleziona il contenitore dei messaggi
 const messageContainer = document.getElementById("message-container");
+
+
+document.addEventListener("mousemove", (e) => {
+  if (useMouse) {
+    const currentMouseX = e.clientX;
+    const currentMouseY = e.clientY;
+
+    // Calcola la direzione del movimento
+    const deltaX = currentMouseX - lastMouseX;
+    const deltaY = currentMouseY - lastMouseY;
+
+    // Aggiorna la posizione di Babbo Natale
+    playerX = currentMouseX - santa.offsetWidth / 2; // Centra il personaggio
+    playerY = currentMouseY - santa.offsetHeight / 2;
+
+    santa.style.left = `${playerX}px`;
+    santa.style.top = `${playerY}px`;
+
+    // Effetto movimento
+    if (deltaY < 0) {
+      santa.classList.add("up");
+      santa.classList.remove("down");
+    } else if (deltaY > 0) {
+      santa.classList.add("down");
+      santa.classList.remove("up");
+    } else {
+      santa.classList.remove("up", "down");
+    }
+
+    // Aggiorna l'ultima posizione del mouse
+    lastMouseX = currentMouseX;
+    lastMouseY = currentMouseY;
+  }
+});
+
+
+document.addEventListener("touchmove", (e) => {
+  useMouse = false; // Evita conflitti con il mouse
+  const touch = e.touches[0]; // Ottieni il primo punto di contatto
+
+  // Aggiorna la posizione del giocatore
+  playerX = touch.clientX - santa.offsetWidth / 2; // Centra il personaggio
+  playerY = touch.clientY - santa.offsetHeight / 2;
+
+  santa.style.left = `${playerX}px`;
+  santa.style.top = `${playerY}px`;
+
+  // Effetto inclinazione per il movimento
+  if (e.movementY < 0) {
+    santa.classList.add("up");
+    santa.classList.remove("down");
+  } else if (e.movementY > 0) {
+    santa.classList.add("down");
+    santa.classList.remove("up");
+  } else {
+    santa.classList.remove("up", "down");
+  }
+});
+
+
+document.addEventListener("touchstart", (e) => {
+  shootSnowball(); // Spara una palla di neve
+});
+
+// Movimento con la tastiera
+document.addEventListener("keydown", (e) => {
+  if (e.key in keysPressed) keysPressed[e.key] = true;
+  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+    useMouse = false; // Passa al controllo da tastiera
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key in keysPressed) keysPressed[e.key] = false;
+});
+
+
+// Sparo con il click del mouse
+document.addEventListener("mousedown", () => {
+  shootSnowball();
+});
+
+// Sparo con la barra spaziatrice
+document.addEventListener("keydown", (e) => {
+  if (e.key === " ") {
+    shootSnowball();
+  }
+});
+
+
+// Aggiornare la posizione del giocatore con la tastiera
+function updatePlayerPosition() {
+  if (!useMouse) {
+    if (keysPressed.ArrowUp) playerY = Math.max(0, playerY - playerSpeed);
+    if (keysPressed.ArrowDown) playerY = Math.min(window.innerHeight - santa.offsetHeight, playerY + playerSpeed);
+    if (keysPressed.ArrowLeft) playerX = Math.max(0, playerX - playerSpeed);
+    if (keysPressed.ArrowRight) playerX = Math.min(window.innerWidth - santa.offsetWidth, playerX + playerSpeed);
+
+    santa.style.left = `${playerX}px`;
+    santa.style.top = `${playerY}px`;
+  }
+}
 
 // Funzione per mostrare un messaggio casuale
 function showRandomMessage() {
